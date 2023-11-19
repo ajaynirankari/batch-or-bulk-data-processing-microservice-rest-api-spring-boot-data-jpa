@@ -12,6 +12,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -48,6 +51,24 @@ class CustomerController {
     @GetMapping("/customers")
     public List<Customer> all() {
         return repo.findAll();
+    }
+
+    @GetMapping("/customersByPagination")
+    public Page<Customer> customersByPagination(
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "10") int size,
+            @RequestParam(required = false, defaultValue = "id") String sortBy,
+            @RequestParam(required = false, defaultValue = "ASC") String orderBy) {
+        Sort sort = null;
+        if (orderBy.equalsIgnoreCase("desc")) {
+            sort = Sort.by(sortBy).descending();
+        } else {
+            sort = Sort.by(sortBy).ascending();
+        }
+        PageRequest pageRequest = PageRequest.of(page, size, sort);
+
+        System.out.println("pageRequest = " + pageRequest);
+        return repo.findAll(pageRequest);
     }
 
     @PostMapping("/customer")
