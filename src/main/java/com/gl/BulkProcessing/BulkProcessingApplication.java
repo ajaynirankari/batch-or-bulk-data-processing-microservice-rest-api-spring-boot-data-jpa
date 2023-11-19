@@ -45,10 +45,10 @@ public class BulkProcessingApplication {
 }
 
 @RestController
-class Controller {
+class CustomerController {
     private final CustomerRepo repo;
 
-    public Controller(CustomerRepo repo) {
+    public CustomerController(CustomerRepo repo) {
         this.repo = repo;
     }
 
