@@ -1,0 +1,5 @@
+INSERT INTO customer VALUES(100001,'Smith');
+INSERT INTO customer VALUES(100002,'John');
+INSERT INTO customer VALUES(100003,'Marry');
+INSERT INTO customer VALUES(100004,'Tim');
+INSERT INTO customer VALUES(100005,'Ben');
